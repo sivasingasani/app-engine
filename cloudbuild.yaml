@@ -1,14 +1,12 @@
-# cloudbuild.yaml
-
 steps:
-  # Step 1: Build the Docker image
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/sample-app', '.']
-  
-  # Step 2: Push the Docker image to Container Registry
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/sample-app']
+# Step to build the Docker image
+- name: "gcr.io/cloud-builders/docker"
+  args: ["build", "-t", "gcr.io/$PROJECT_ID/sample-app", "."]
 
-  # Step 3: Deploy the application to Google App Engine
-  - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['app', 'deploy']
+# Step to push the Docker image to Google Container Registry
+- name: "gcr.io/cloud-builders/docker"
+  args: ["push", "gcr.io/$PROJECT_ID/sample-app"]
+
+# Step to deploy the Docker image to Google App Engine
+- name: "gcr.io/cloud-builders/gcloud"
+  args: ["app", "deploy", "--image-url=gcr.io/$PROJECT_ID/sample-app"]
